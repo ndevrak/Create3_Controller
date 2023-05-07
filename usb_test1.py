@@ -1,9 +1,17 @@
 import usb.core
 import usb.util
 
-dev = usb.core.find()
+from usb_backend import USB1
 
-if dev is None:
-    raise ValueError("Our device is not connected")
+from irobot_edu_sdk.backend.bluetooth import Bluetooth
+from irobot_edu_sdk.robots import event, hand_over, Color, Robot, Root, Create3
+from irobot_edu_sdk.music import Note
 
-cfg = usb.util.find_descriptor(dev, )
+robot = Create3(USB1())
+
+@event(robot.when_play)
+async def draw_square(robot):
+    a = await robot.get_battery_level()
+    print(a)
+
+robot.play()
