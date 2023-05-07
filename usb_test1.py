@@ -3,6 +3,7 @@ import usb.util
 
 dev = usb.core.find()
 
-dev.set_configuration()
+if dev is None:
+    raise ValueError("Our device is not connected")
 
-print(dev)
+cfg = usb.util.find_descriptor(dev, )
