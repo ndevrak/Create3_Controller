@@ -11,7 +11,6 @@ robot = Create3(USB1())
 
 @event(robot.when_play)
 async def draw_square(robot):
-    a = await robot.get_battery_level()
-    print(a)
+    await robot.set_lights_rbg(0,0,255)
 
 robot.play()

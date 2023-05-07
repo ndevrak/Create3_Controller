@@ -17,26 +17,27 @@ class USB1(Backend):
         if self._usb_dev.is_kernel_driver_dactive(self._usb_i):
             self._usb_dev.detach_ketnel_driver(self._usb_i)
         
+        print(self._usb_dev)
+        print(self._usb_ep)
     
     async def connect(self):
         """Connect to robot"""
-        raise NotImplementedError()
+        sleep(1)
+        pass
 
     async def is_connected(self) -> bool:
         """Returns True if robot is connected"""
-        raise NotImplementedError()
+        return self._usb_dev is not None
 
     async def disconnect(self):
         """Disconnect from robot"""
-        raise NotImplementedError()
+        self._usb_dev = None
 
     async def read_packet(self) -> Packet:
         string = b''
         while not (string.endswith(b'\n') and len(string) > 40):
             await sleep(0)
-            while not self._usb.any():
-                await sleep(0)
-            string += self._usb.read(1)
+            string += self._usb_dev.read(self._usb_ep, [])
         return Packet.from_bytes(unhexlify(string[-41:-1]))
 
     async def write_packet(self, packet: Packet):
