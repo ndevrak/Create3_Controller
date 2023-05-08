@@ -14,8 +14,8 @@ class USB1(Backend):
         self._usb_ep = self._usb_dev[0].interfaces()[0].endpoints()[0]
         self._usb_i = self._usb_dev[0].interfaces()[0].bInterfaceNumber
 
-        if self._usb_dev.is_kernel_driver_dactive(self._usb_i):
-            self._usb_dev.detach_ketnel_driver(self._usb_i)
+        if self._usb_dev.is_kernel_driver_active(self._usb_i):
+            self._usb_dev.detach_kernel_driver(self._usb_i)
         
         print(self._usb_dev)
         print(self._usb_ep)

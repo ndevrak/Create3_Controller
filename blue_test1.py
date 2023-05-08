@@ -11,7 +11,7 @@ robot = Create3(bluetooth)
 async def draw_square(robot):
     print("Battery Level : " + str(await robot.get_battery_level())) # Print Battery Level
 
-    await robot.reset_navigation() # reset internal track of location
+    await robot.set_lights_rbg(0,0,255)
 
     #await robot.set_wheel_speeds(left = 100, right = 100) # sets wheel speeds in cms
 
