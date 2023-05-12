@@ -1,22 +1,21 @@
 from irobot_edu_sdk.backend.bluetooth import Bluetooth
 from irobot_edu_sdk.robots import event, hand_over, Color, Robot, Root, Create3
 from irobot_edu_sdk.music import Note
+from asyncio import sleep
 
-import usb
+# this is a basic control using the code irobot provides
+# just turns robot in place
 
-bluetooth = Bluetooth()
-robot = Create3(bluetooth)
+robot = Create3(Bluetooth())
 
 @event(robot.when_play)
-async def draw_square(robot):
-    print("Battery Level : " + str(await robot.get_battery_level())) # Print Battery Level
+async def play(robot):
+    print("Battery Level : " + str((await robot.get_battery_level())[1]) + "%") # Print Battery Level
+    await robot.turn_left(90)
+    await robot.turn_right(90)
 
-    await robot.set_lights_rbg(0,0,255)
-
-    #await robot.set_wheel_speeds(left = 100, right = 100) # sets wheel speeds in cms
-
-    for i in range(3):
-        await robot.move(20)  # cm
-        await robot.turn_left(120)  # deg
+    # Same result as the previous 2 commands.
+    await robot.turn_left(90)
+    await robot.turn_left(-90)
 
 robot.play()
